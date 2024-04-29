@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Notification
+metadata:
+  name: slack-notification
+  namespace: argocd
+spec:
+  destination:
+    webhook:
+      url: https://hooks.slack.com/services/xoxb-7004892342451-7033422722757-dBaIRChLfxlLw0PoWjk2Cs2i
+      contentType: application/json
+  eventTypes:
+    - sync
+    - syncFailed
+    - syncInProgress
+    - syncUnknown
+    - syncDegraded
+    - deploy
