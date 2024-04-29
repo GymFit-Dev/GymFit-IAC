@@ -6,7 +6,7 @@ metadata:
 spec:
   destination:
     webhook:
-      url: https://hooks.slack.com/services/xoxb-7004892342451-7033422722757-dBaIRChLfxlLw0PoWjk2Cs2i
+      url: {당신의 웹훅 주소를 입력하세요}
       contentType: application/json
   eventTypes:
     - sync
