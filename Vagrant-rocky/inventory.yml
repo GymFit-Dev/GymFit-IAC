@@ -1,0 +1,90 @@
+192.168.0.17 k8sW
+192.168.0.14 k8sC1
+192.168.0.15 k8sC2
+192.168.0.18 ha1
+192.168.0.19 ha2
+192.168.0.13 db-slave
+192.168.0.3 db-master
+192.168.0.2 dev-server
+
+[local_multi]
+k8sW ansible_ssh_user=vagrant ansible_ssh_private_key_file=~/.vagrant/machines/k8s-W/virtualbox/private_key
+k8sC1 ansible_ssh_user=vagrant ansible_ssh_private_key_file=~/.vagrant/machines/k8s-C1/virtualbox/private_key
+k8sC2 ansible_ssh_user=vagrant ansible_ssh_private_key_file=~/.vagrant/machines/k8s-C2/virtualbox/private_key
+ha1 ansible_ssh_user=vagrant ansible_ssh_private_key_file=~/.vagrant/machines/haproxy/virtualbox/private_key
+ha2 ansible_ssh_user=vagrant ansible_ssh_private_key_file=~/.vagrant/machines/haproxy2/virtualbox/private_key
+db-slave ansible_ssh_user=vagrant ansible_ssh_private_key_file=~/.vagrant/machines/k8s-W/virtualbox/private_key
+db-master ansible_ssh_user=vagrant ansible_ssh_private_key_file=~/.vagrant/machines/k8s-W/virtualbox/private_key
+dev-server ansible_ssh_user=vagrant ansible_ssh_private_key_file=~/.vagrant/machines/k8s-W/virtualbox/private_key
+
+global_defs {
+   router_id VR_1
+}
+
+vrrp_instance VI_1 {
+    state MASTER
+    interface eth1
+    virtual_router_id 51
+    priority 200
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass 1111
+    }
+    virtual_ipaddress {
+        192.168.0.250
+    }
+}
+
+global_defs {
+   router_id VR_2
+}
+
+vrrp_instance VI_2 {
+    state BACKUP
+    interface eth1
+    virtual_router_id 51
+    priority 100
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass 1111
+    }
+    virtual_ipaddress {
+        192.168.0.250
+    }
+}
+
+sudo kubeadm init --control-plane-endpoint 192.168.0.250:6443 --upload-certs
+
+
+Your Kubernetes control-plane has initialized successfully!
+
+To start using your cluster, you need to run the following as a regular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Alternatively, if you are the root user, you can run:
+
+  export KUBECONFIG=/etc/kubernetes/admin.conf
+
+You should now deploy a pod network to the cluster.
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+You can now join any number of the control-plane node running the following command on each as root:
+
+  kubeadm join 192.168.0.250:6443 --token pki1ss.v1u3o8ecb8y1st66 \
+        --discovery-token-ca-cert-hash sha256:8c20e094f81dbb0c3376ee927060cc6508405cca5f6fb64280dda5c6a1e269ad \
+        --control-plane --certificate-key 1a2538f3234882173894fdc33a60bdf693644af720a50c047eacae4df6beb07d
+
+Please note that the certificate-key gives access to cluster sensitive data, keep it secret!
+As a safeguard, uploaded-certs will be deleted in two hours; If necessary, you can use
+"kubeadm init phase upload-certs --upload-certs" to reload certs afterward.
+
+Then you can join any number of worker nodes by running the following on each as root:
+
+kubeadm join 192.168.0.250:6443 --token pki1ss.v1u3o8ecb8y1st66 \
+        --discovery-token-ca-cert-hash sha256:8c20e094f81dbb0c3376ee927060cc6508405cca5f6fb64280dda5c6a1e269ad
