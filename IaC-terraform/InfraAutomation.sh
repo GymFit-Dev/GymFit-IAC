@@ -57,14 +57,6 @@ resource "aws_s3_bucket_acl" "tf_backend_acl" {
   acl    = "private"
 }
 
-resource "aws_s3_bucket_ownership_controls" "tf_backend_ownership" {
-  count  = terraform.workspace == "default" ? 1 : 0 # workspace가 default일 때만 실행해라
-  bucket = aws_s3_bucket.tf_backend[0].id
-  rule {
-    object_ownership = "BucketOwnerPreferred"
-  }
-}  
-
 
 # Configure AWS Provider
 provider "aws" {
