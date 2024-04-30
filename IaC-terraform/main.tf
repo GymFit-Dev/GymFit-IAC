@@ -7,20 +7,20 @@ terraform {
     }
   }
   backend "s3" {
-    bucket = "gf-prd-tfstate-s3-04261301"
+    bucket = "gf-prd-tfstate-s3-04301704"
     key    = "terraform.tfstate"
-    region = "ap-south-1"
+    region = "sa-east-1"
     #    dynamodb_table = "terraform-lock" # s3 bucket을 이용한 협업을 위해 설정 
   }
 }
 resource "aws_s3_bucket" "tf_backend" {
   count  = terraform.workspace == "default" ? 1 : 0 # workspace가 default일 때만 실행해라
-  bucket = "gf-prd-tfstate-s3-04261301"
+  bucket = "gf-prd-tfstate-s3-04301704"
   # versioning {                   # deprecated된 문법으로 사용이 가능하긴 하나 권장하지 않음, 자체모듈에서 삭제시 업데이트 필요
   #   enabled = true
   # }
   tags = {
-    Name = "gf-prd-tfstate-s3-04261301"
+    Name = "gf-prd-tfstate-s3-04301704"
   }
 }
 
