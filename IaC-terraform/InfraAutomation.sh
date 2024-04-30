@@ -140,7 +140,7 @@ ssh-keygen -t rsa -b 4096 -C "" -f "./.ssh/$keyName" -N ""
 #인스턴스 관련
 aws ec2 describe-instance-type-offerings --location-type "availability-zone" --region $region --query "InstanceTypeOfferings[?starts_with(InstanceType, 't3')].[InstanceType]" --output text | sort | uniq > instance.info
 
-read -p "ami 게시자 선택"[Default: amazon]: " ownerInput
+read -p "ami 게시자 선택[Default: amazon]: " ownerInput
 #BastionHost
 echo "BastionHost AMI 선택"
 echo "=============================="
