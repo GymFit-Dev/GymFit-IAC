@@ -140,6 +140,7 @@ ssh-keygen -t rsa -b 4096 -C "" -f "./.ssh/$keyName" -N ""
 #인스턴스 관련
 aws ec2 describe-instance-type-offerings --location-type "availability-zone" --region $region --query "InstanceTypeOfferings[?starts_with(InstanceType, 't3')].[InstanceType]" --output text | sort | uniq > instance.info
 
+read -p ""ami 게시자 선택"[Default: amazon]: " ownerInput
 #BastionHost
 echo "BastionHost AMI 선택"
 echo "=============================="
@@ -278,13 +279,14 @@ echo "프로젝트명: ${prjt}"
 echo "VPC_대역: ${vpcCidr}"
 echo "SSH_OPEN_IP: ${myIp}"
 echo "BASTION_AMI: ${bAmi}"
-echo "ANS_SRV_AMI: ${srvAmi}"
-echo "ANS_SRV_Type: ${srvType}"
-echo "ANS_SRV_Storage: ${srvVolume}"
-echo "ANS_NOD_AMI: ${nodAmi}"
-echo "ANS_NOD_Type: ${nodType}"
-echo "ANS_NOD_Storage: ${nodVolume}"
-echo "ANS_NOD_COUNT: ${nodCount}"
+echo "KUBE_CTL_AMI: ${srvAmi}"
+echo "KUBE_CTL_Type: ${srvType}"
+echo "KUBE_CTL_Storage: ${srvVolume}"
+echo "KUBE_CTL_COUNT: ${srvCount}"
+echo "KUBE_WORKER_AMI: ${nodAmi}"
+echo "KUBE_WORKER_Type: ${nodType}"
+echo "KUBE_WORKER_Storage: ${nodVolume}"
+echo "KUBE_WORKER_COUNT: ${nodCount}"
 echo "==========================="
 
 #내용 확인 선택문
