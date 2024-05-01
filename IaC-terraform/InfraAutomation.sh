@@ -40,22 +40,22 @@ terraform {
     #    dynamodb_table = "terraform-lock" # s3 bucket을 이용한 협업을 위해 설정 
   }
 }
-resource "aws_s3_bucket" "tf_backend" {
-  count  = terraform.workspace == "default" ? 1 : 0 # workspace가 default일 때만 실행해라
-  bucket = "gf-prd-tfstate-s3-04301704"
-  # versioning {                   # deprecated된 문법으로 사용이 가능하긴 하나 권장하지 않음, 자체모듈에서 삭제시 업데이트 필요
-  #   enabled = true
-  # }
-  tags = {
-    Name = "gf-prd-tfstate-s3-04301704"
-  }
-}
+# resource "aws_s3_bucket" "tf_backend" {
+#   count  = terraform.workspace == "default" ? 1 : 0 # workspace가 default일 때만 실행해라
+#   bucket = "gf-prd-tfstate-s3-04301704"
+#   # versioning {                   # deprecated된 문법으로 사용이 가능하긴 하나 권장하지 않음, 자체모듈에서 삭제시 업데이트 필요
+#   #   enabled = true
+#   # }
+#   tags = {
+#     Name = "gf-prd-tfstate-s3-04301704"
+#   }
+# }
 
-resource "aws_s3_bucket_acl" "tf_backend_acl" {
-  count  = terraform.workspace == "default" ? 1 : 0 # workspace가 default일 때만 실행해라
-  bucket = aws_s3_bucket.tf_backend[0].id
-  acl    = "private"
-}
+# resource "aws_s3_bucket_acl" "tf_backend_acl" {
+#   count  = terraform.workspace == "default" ? 1 : 0 # workspace가 default일 때만 실행해라
+#   bucket = aws_s3_bucket.tf_backend[0].id
+#   acl    = "private"
+# }
 
 
 # Configure AWS Provider
