@@ -6,5 +6,4 @@ sudo pip3 install boto3
 sudo pip3 install --upgrade awscli
 
 echo 'export ANSIBLE_CONFIG=/home/ec2-user/.ansible/ansible.cfg' >>/home/ec2-user/.bashrc
-echo 'source /home/ec2-user/.bashrc' >>/home/ec2-user/.bashrc
 sudo yum install git -y
