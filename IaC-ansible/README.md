@@ -1,3 +1,4 @@
+<pre>
 # miniproject-ansible
 terraformInfra-ansibleService-repository <br>
 
@@ -48,3 +49,4 @@ filters:<br>
 compose:<br>
   ansible_host: private_ip_address<br>
 
+</pre>
