@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
 
   # 마스터 서버 정의
   config.vm.define "db-master" do |master|
-    master.vm.box = "file://C:/Users/admin/Downloads/box/CentOS-7-x86_64-Vagrant-2004_01.VirtualBox.box"
+    master.vm.box = "generic/rocky9"
     master.vm.hostname = "db-master"
     master.vm.network "public_network", type: "dhcp", :bridge => 'Realtek 8812BU Wireless LAN 802.11ac USB NIC'
     master.vm.provider "virtualbox" do |vb|
@@ -37,7 +37,7 @@ Vagrant.configure("2") do |config|
 
   # 슬레이브 서버 정의
   config.vm.define "db-slave" do |slave|
-    slave.vm.box = "file://C:/Users/admin/Downloads/box/CentOS-7-x86_64-Vagrant-2004_01.VirtualBox.box"
+    slave.vm.box = "generic/rocky9"
     slave.vm.hostname = "db-slave"
     slave.vm.network "public_network", type: "dhcp", :bridge => 'Realtek 8812BU Wireless LAN 802.11ac USB NIC'
     slave.vm.provider "virtualbox" do |vb|
